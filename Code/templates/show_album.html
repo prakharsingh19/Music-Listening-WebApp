@@ -1,0 +1,138 @@
+{% extends 'index.html' %}
+{% block title %}Album Details{% endblock %}
+
+{% block styles %}
+<style>
+    .song_list {
+        /* border: 1px solid #fff; */
+        margin: 2vw;
+        overflow: scroll;
+        height: 50vh;
+        width: 74vw;
+    }
+
+    main .left_pane h4 {
+        padding-top: 4vh;
+        padding-left: 4vw;
+        place-items: center;
+        font-size: 3vw;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: rgb(69, 72, 72);
+    }
+
+    .song_list .list {
+        margin-left: 2vw;
+        margin-bottom: .7vh;
+        /* border: 1px solid #fff; */
+        width: 70vw;
+        height: 7vh;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .song_list :hover {
+        background: #0e2238;
+    }
+
+    .list img {
+        height: 7vh;
+        width: 7vh;
+    }
+
+    .list .list_detail {
+        margin-top: .5vw;
+        margin-bottom: 1vw;
+        /* border: 1px solid #fff; */
+        width: 40vw;
+        height: 5vh;
+        /* overflow: scroll; */
+
+    }
+
+    .list_detail h4 {
+        font-size: 1.5vh;
+        font-weight: 600;
+        color: azure;
+    }
+
+    .list_detail h6 {
+        font-size: 1vh;
+        font-weight: 400;
+        color: gray;
+    }
+</style>
+{% endblock %}
+
+{% block name %}
+<br>
+{{current_user.f_name}}
+{% endblock %}
+
+{% block links %}
+
+{% if current_user.user_id < 0 %} <a href="/dashboard">Dashboard</a>
+    <br>
+    <a href="/logout">Logout</a>
+    <br>
+    <a href="/all_songs">All Songs</a>
+    <br>
+    <a href="/all_creators">All Creators</a>
+    {% else %}
+<a href="/home">Home Page</a>
+<br>
+<a href="/history">History</a>
+<br>
+<a href="/explore">Explore</a>
+<br>
+{% endif %}
+{% if current_user.role == 'Creator' %}
+<a href="/song_upload">Song Upload</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<img src="{{url_for('static',filename='/image/'+ current_album.image)}}" alt=""
+    style="height: 20vh; width: 20vw; margin: 4vh;">
+<br>
+<h5 style="font-size: 3vh; color: #0b3756; font-weight: 600; margin-left: 3vw;">{{current_album.album_name}}</h5>
+<h6 style="font-size: 2vh; color: #0b3756; font-weight: 600; margin-left: 3vw;">Total songs : {{current_album_songs|length}}</h6>
+<div class="song_list">
+    {% if current_user.role == 'Creator' and current_album.created_by==current_user.user_id %}
+    <a href="/song_upload_album/{{current_album.album_id}}"><button style="margin: 2vh;">Add more Song</button></a>
+    <a href="/delete_album/{{current_album.album_id}}"><button style="margin: 2vh;" >Delete Album</button></a>
+    {% for song in current_album_songs %}
+    {% set audio = song.song %}
+    {% set poster = song.image %}
+    <div class="list"
+        onclick="playSong('/static/audio/' + '{{ song.song }}', '/static/image/' + '{{ song.image }}','{{song.song_id}}')">
+        <div class="list_image">
+            <img src="{{url_for('static',filename='/image/'+ song.image)}}" alt="">
+        </div>
+        <div class="list_detail">
+            <h4>{{song.song_name}}</h4>
+            <h6>{{song.artist}}</h6>
+        </div>
+        <a href="/song_delete_album/{{current_album.album_id}}/{{song.song_id}}">
+                <i class="bi bi-trash-fill" style="color: rgb(201, 7, 7); font-size: 2vw; margin: 2vw;"></i></a>
+    </div>
+    {% endfor %}
+
+    {% else %}
+    {% for song in current_album_songs %}
+    {% set audio = song.song %}
+    {% set poster = song.image %}
+    <div class="list"
+        onclick="playSong('/static/audio/' + '{{ song.song }}', '/static/image/' + '{{ song.image }}','{{song.song_id}}')">
+        <div class="list_image">
+            <img src="{{url_for('static',filename='/image/'+ song.image)}}" alt="">
+        </div>
+        <div class="list_detail">
+            <h4>{{song.song_name}}</h4>
+            <h6>{{song.artist}}</h6>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+    {% endblock %}

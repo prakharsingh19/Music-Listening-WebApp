@@ -1,0 +1,97 @@
+{% extends 'index.html' %}
+
+
+{% block styles %}
+<style>
+        .main_content {
+        margin-top: 10vh;
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .create form {
+        margin-bottom: 20vh;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 5vh;
+        border-radius: 3vh;
+        width: 30vw;
+        height: 50vh;
+    }
+
+    .create label {
+        color: #fff;
+    }
+
+    .create select,
+    input {
+        margin-bottom: 10px;
+    }
+
+    .create button {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        padding: 1vh;
+        border-radius: 1vh;
+        cursor: pointer;
+    }
+
+    .create button:hover {
+        background-color: #218838;
+    }
+</style>
+{% endblock %}
+
+{% block links %}
+<a href="/home">Home Page</a>
+<a href="/song_upload">Song Upload</a>
+<a href="/create_playlist">Create Playlist</a>
+{% endblock %}
+    {% block content %}
+    <div class="create">
+        <div class="form-container">
+            <h2>UPLOAD A NEW SONG</h2>
+            <form action="/song_upload" method="post" enctype="multipart/form-data"    >
+                <label for="song_name">Song Name:</label>
+                <input type="text" id="song_name" name="song_name" required>
+                <br>
+                <label for="artist">Artist: </label>
+                <input type="text" id="artist" name="artist" required>
+<br>
+                <label for="lyrics">Lyrics </label>
+                <input type="text" id="lyrics" name="lyrics" value="Lyrics Not Found" required>
+<br>
+                <label for="audio">Audio</label>
+                <input type="file" id="audio" name="audio" required>
+<br>
+                <label for="image">Song Poster:</label>
+                <input type="file" id="image" name="image" accept="image/*" required>
+<br>
+                <label for="genre">Song Genre:</label>
+                <select id="genre" name="genre" required>
+                    <option value="Pop">Pop</option>
+                    <option value="Bollywood">Bollywood</option>
+                    <option value="Hollywood">Hollywood</option>
+                    <option value="Romantic">Romantic</option>
+                    <option value="Motivation">Motivation</option>
+                </select>
+<br>
+                <label for="tags">Tags:</label>
+                <textarea id="tags" name="tags" rows="2" required></textarea>
+                <br>
+                <button type="submit">Upload Song</button>
+            </form>
+        </div>
+</div>
+    {% endblock %}
+</body>
+
+</html>

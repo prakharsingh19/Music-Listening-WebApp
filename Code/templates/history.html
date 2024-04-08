@@ -1,0 +1,60 @@
+{% extends 'index.html' %}
+{% block title %}Album Details{% endblock %}
+
+{% block styles %}
+<style>
+    .history{
+        /* border: 1px solid #fff; */
+        margin: 2vw;
+        width: 75vw;
+        height: 70vh;
+        overflow: scroll;
+    }
+    .history .list{
+        width: 60vw;
+        height: 10vh;
+        /* border: 1px solid #fff; */
+        margin: 1vw;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .list img{
+        height: 10vh;
+        width: 10vh;
+    }
+    .list .list_detail{
+        color: rgb(12, 65, 112);
+        font-size: 2vw;
+        font-weight: 400;
+        margin-left: 3vw;
+        margin-top: 1vw;
+        }
+    .list:hover{
+        background-color: antiquewhite;
+    }
+</style>
+{% endblock %}
+
+{% block links %}
+<a href="/home">Home Page</a>
+<br>
+<a href="/explore">Explore</a>
+<br>
+{% endblock %}
+
+{% block content %}
+<div class="history">
+    <h5 style="font-size: 2vw; color: #ae5b5b;">Your Activites</h5>
+{% for song in songs %}
+{% set audio = song.song %}
+{% set poster = song.image %}
+<div class="list" onclick="playSong('/static/audio/' + '{{ song.song }}', '/static/image/' + '{{ song.image }}','{{song.song_id}}')">
+    <img src="{{url_for('static',filename='/image/'+ song.image)}}" alt="">
+    <div class="list_detail">
+        <h4>{{song.song_name}}</h4>
+        <h6>{{song.artist}}</h6>
+    </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

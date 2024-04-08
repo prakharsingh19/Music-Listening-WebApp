@@ -1,0 +1,90 @@
+{% extends 'index.html' %}
+
+{% block styles %}
+
+<style>
+    .main_content {
+        margin-top: 10vh;
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .add_song form {
+        margin-bottom: 20vh;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 3vh;
+        border-radius: 3vh;
+        width: 30vw;
+    }
+
+    .add_song label {
+        color: #fff;
+    }
+
+    .add_song select,
+    input {
+        margin-bottom: 10px;
+    }
+
+    .add_song button {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        padding: 1vh;
+        border-radius: 1vh;
+        cursor: pointer;
+    }
+
+    .add_song button:hover {
+        background-color: #218838;
+    }
+</style>
+{% endblock %}
+{% block links %}
+<a href="/home">Home Page</a>
+<br>
+<a href="">All Playlists</a>
+<br>
+<a href="">History</a>
+<br>
+<a href="">Explore</a>
+<br>
+
+{% endblock %}
+
+
+
+{% block content %}
+<div class="add_song">
+    <form action="/add_song/{{current_playlist.playlist_id}}" method="post" enctype="multipart/form-data">
+        <label for="playllist_name" style="font-size: 3vh;font-weight: 600;">{{current_playlist.playlist_name}}</label>
+        {% if available_song %}
+        <h3 style="font-size: 2vh;">Select Songs:</h3>
+
+        {% for song in available_song %}
+        <div>
+            <input type="checkbox" id="{{ song.song_id }}" name="selected_songs" value="{{ song.song_id }}">
+            <label for="{{ song.song_id }}">{{ song.song_name }}</label>
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-success">Add Song</button>
+        <a href="/show_playlist/{{current_playlist.playlist_id}}"><button>Goto Tracks</button></a>
+
+        {% else %}
+        <h5 style="font-size: 3vh; font-weight: 400;">No More Tracks Avaliable to Add in this Playlist</h5>
+        <a href="/show_playlist/{{current_playlist.playlist_id}}"><button>Goto Tracks</button></a>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}
+</body>
+
+</html>

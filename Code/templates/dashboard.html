@@ -1,0 +1,134 @@
+{% extends 'index.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block styles %}
+<style>
+    .insights {
+        /* border: 1px solid #fff; */
+        height: 85vh;
+        width: 78vw;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: scroll;
+        padding: 2vw;
+    }
+
+    .insights .charts {
+        height: 40vh;
+        width: 78vw;
+        /* border: 1px solid #fff; */
+        display: flex;
+    }
+
+    .charts .chart {
+        /* border: 1px solid #fff; */
+        width: 32vw;
+        height: 35vh;
+        margin: 1vw;
+    }
+
+    .insights .block {
+        margin: 2vw;
+        /* border: 1px solid #fff; */
+    }
+
+    main .song_play {
+        width: 0%;
+        height: 0%;
+    }
+
+    main .left_pane,
+    .right_pane {
+        /* border: 1px solid #fff; */
+        width: 20%;
+        height: 100%;
+        background: rgb(0, 0, 0);
+    }
+
+    .right_pane {
+        width: 79.4%;
+        height: 100%;
+        background: #0f1213;
+    }
+
+    .insights .block {
+        /* border: 1px solid #fff; */
+        border-radius: 15%;
+        height: 15vh;
+        width: 10vw;
+        background-color: #544747;
+
+    }
+
+    .block:hover {
+        background-color: gray;
+    }
+</style>
+{% endblock %}
+
+{% block name %}
+<br>ADMIN
+<br>
+<p style="color: rgb(221, 244, 10);">{{current_user.adminname}}</p>
+{% endblock %}
+
+{% block links %}
+<a href="/logout">Logout</a>
+{% endblock %}
+{% block content %}
+
+<div class="insights">
+    <!-- <h5 style="margin: 2vw; color: aquamarine;">Instant Insights</h5> -->
+    <div class="charts">
+        <div class="chart">
+            <h5 style="color: #fff;">Top Contributing Creators</h5>
+            <img src="static/image/top_contributors_chart.png" alt=""
+                style="height: 35vh; width: 33vw; border-radius: 2vw;">
+        </div>
+        <div class="chart">
+            <h5 style="color: #fff;">Top Played Songs</h5>
+        <img src="static/image/top_played_songs_chart.png" alt=""
+            style="height: 35vh; width: 33vw; border-radius: 2vw;">
+        </div>
+    </div>
+    <div class="block">
+        <a href="/all_users" style="text-decoration: none;">
+
+            <h5 style="font-size: 2vw; font-weight: 400; margin-left: 2vw; color: antiquewhite;">Total User
+                <br>
+            </h5>
+            <p style="font-size: 2vw; margin-left: 3vw; color: rgb(203, 123, 18);">{{all_normal_user|length}}</p>
+        </a>
+    </div>
+
+    <div class="block">
+        <a href="/all_songs" style="text-decoration: none;">
+
+            <h5 style="font-size: 2vw; font-weight: 400; margin-left: 2vw; color: antiquewhite;">Total Songs
+                <br>
+            </h5>
+            <p style="font-size: 2vw; margin-left: 3vw; color: rgb(203, 123, 18);">{{all_songs|length}}</p>
+        </a>
+
+    </div>
+    <div class="block">
+        <a href="/all_creators" style="text-decoration: none;">
+
+            <h5 style="font-size: 2vw; font-weight: 400; margin-left: 2vw; color: antiquewhite;">Total Creator
+                <br>
+            </h5>
+            <p style="font-size: 2vw; margin-left: 3vw; color: rgb(203, 123, 18);">{{all_creator|length}}</p>
+        </a>
+
+    </div>
+    <div class="block">
+        <h5 style="font-size: 2vw; font-weight: 400; margin-left: 2vw; color: antiquewhite;">Total Albums
+            <br>
+        </h5>
+        <p style="font-size: 2vw; margin-left: 3vw; color: rgb(203, 123, 18);">{{all_albums|length}}</p>
+    </div>
+
+</div>
+
+
+{% endblock %}

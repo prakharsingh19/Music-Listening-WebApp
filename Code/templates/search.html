@@ -1,0 +1,316 @@
+{% extends 'index.html' %}
+{% block title %} Search {% endblock %}
+{% block styles %}
+<style>
+    .content {
+        /* border: 1px solid #fff; */
+        width: 79vw;
+        height: 80vh;
+        overflow: scroll;
+
+    }
+
+    .songs_block {
+        /* border: 1px solid #fff; */
+        width: 79vw;
+        height: 30vh;
+        padding: 2vw;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: scroll;
+    }
+
+    .album_block {
+        width: 79vw;
+        height: 57vh;
+        padding: 2vw;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: scroll;
+    }
+
+    .album_block .name {
+        width: 79vw;
+        height: 4vh;
+    }
+
+    .songs_block .name {
+        width: 79vw;
+        height: 4vh;
+    }
+
+    .songs {
+        /* border: 1px solid #fff; */
+        width: 13vw;
+        height: 20vh;
+        margin-left: 2vw;
+        border-radius: 20%;
+        margin-bottom: 1vw;
+    }
+
+    .songs:hover {
+        background-color: gray;
+    }
+
+    .songs img {
+        margin-left: 0vw;
+        width: 13vw;
+        height: 15vh;
+        border-radius: 20%;
+    }
+
+    .album {
+        width: 13vw;
+        height: 18vh;
+        border-radius: 20%;
+    }
+
+    .album:hover {
+        background-color: gray;
+    }
+
+    .list {
+        /* border: 1px solid #fff; */
+        height: 85vh;
+        width: 83vw;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: scroll;
+        padding: 2vw;
+    }
+
+    .list .ribbon {
+        /* border: 1px solid #fff; */
+        border-radius: 20vh;
+        height: 7vh;
+        width: 77vw;
+        margin-bottom: 1vw;
+        /* margin-left: 1vw; */
+        margin-top: .5vh;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .ribbon:hover {
+        background-color: #117ea2;
+    }
+
+    .ribbon .ribbon_details {
+        /* border: 1px solid #fff; */
+        /* margin-left: 1.5vw; */
+        height: 5vh;
+        width: 75vw;
+        margin-top: .8vw;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .list .ribbon_group {
+        /* border: 1px solid #fff; */
+        width: 83vw;
+        height: 70vh;
+    }
+
+    .list .details {
+        /* border: 1px solid #fff; */
+        width: 83vw;
+        height: 3vh;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: scroll;
+    }
+
+    .bi:hover {
+        color: #fff;
+        background-color: aliceblue;
+    }
+
+    .c_name {
+        /* border: 1px solid #fff; */
+        width: 14vw;
+        height: 5vh;
+        margin-left: 1vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .c_username {
+        /* border: 1px solid #fff; */
+        width: 15vw;
+        height: 5vh;
+        margin-left: 1vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .c_mail {
+        /* border: 1px solid #fff; */
+        width: 12vw;
+        height: 5vh;
+        margin-left: 2.3vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .c_song {
+        /* border: 1px solid #fff; */
+        width: 5vw;
+        height: 5vh;
+        margin-left: 1vw;
+
+    }
+
+    .c_album {
+        /* border: 1px solid #fff; */
+        width: 5vw;
+        height: 5vh;
+        margin-left: 7vw;
+
+    }
+
+    .c_status {
+        /* border: 1px solid #fff; */
+        width: 5vw;
+        height: 5vh;
+        margin-left: 5vw;
+
+    }
+</style>
+{% endblock %}
+{% block name %}{{current_user.f_name}}{% endblock %}
+{% block links %}
+{% if current_user.user_id < 0 %} <a href="/dashboard">Dashboard</a>
+    <br>
+    <a href="/logout">Logout</a>
+    <br>
+    <a href="/all_songs">All Songs</a>
+    <br>
+    <a href="/all_creators">All Creators</a>
+    {% else %}
+    <a href="/all_playlist">All Playlists</a>
+    <br>
+    <a href="/history">History</a>
+    <br>
+    <a href="/">Explore</a>
+    <br>
+    <a href="/home">Home Page</a>
+    {% endif %}
+    {% if current_user.role == 'Creator' %}
+    <a href="create_album">Create Album</a>
+    <br>
+    <a href="/all_albums">All Albums</a>
+    {% endif %}
+    {% endblock %}
+
+    {% block ProfilePic %}
+
+
+    {% endblock %}
+
+    {% block content %}
+    <div class="content">
+        <div class="songs_block">
+            <div class="name">
+                <h3 style="color: #fff; margin-left: 0vw;">Songs </h3>
+            </div>
+            {% if songs %}
+            {% for song in songs %}
+            {% set audio = song.song %}
+            {% set poster = song.image %}
+            <div class="songs"
+                onclick="playSong('/static/audio/' + '{{ song.song }}', '/static/image/' + '{{ song.image }}','{{song.song_id}}')">
+                <img src="{{url_for('static',filename='/image/'+ song.image)}}" alt="">
+                <h5
+                    style="color: beige; font-size: 1.5vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    {{song.song_name}}</h5>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h5 style="color: #fff; margin-top: 3vw;">No Song Found</h5>
+            {% endif %}
+        </div>
+
+
+
+        <div class="album_block">
+            <div class="name">
+                <h3 style="color: #fff; margin-left: 0vw;">Albums</h3>
+            </div>
+            {% if albums %}
+            {% for album in albums %}
+            <div class="album">
+                <a href="/show_album/{{album.album_id}}" style="text-decoration: none;">
+                    <img src="{{url_for('static',filename='/image/'+ album.image)}}" alt=""
+                        style="height: 15vh; width: 13vw; border-radius: 20%;">
+                    <h4
+                        style="color: beige; font-size: 1.5vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        {{album.album_name}}</h4>
+                </a>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h5 style="color: #fff; margin-top: 3vw;">No Album Found</h5>
+            {% endif %}
+        </div>
+        {% if users %}
+        <div class="users_block">
+            <div class="list">
+                <h5 style="color: #fff; font-weight: 600;">All Creators</h5>
+
+                <div class="details">
+                    <h5 style="color: #eb14a7; margin-left: 2vw;">Name</h5>
+                    <h5 style="color: #eb14a7; margin-left: 11vw;">UserName</h5>
+                    <h5 style="color: #eb14a7; margin-left: 11vw;">Mail</h5>
+                    <!-- <h5 style="color: #eb14a7; margin-left: 10vw;">Total Songs</h5> -->
+                    <h5 style="color: #eb14a7; margin-left: 12vw;">Role</h5>
+                    <h5 style="color: #eb14a7; margin-left: 4vw;">Ban Status</h5>
+                </div>
+                <div class="ribbon_group">
+                    {% for user in users %}
+                    <div class="ribbon">
+                        <div class="ribbon_details">
+                            <h5
+                                style="color: #fff; margin-left: 0vw; overflow: hidden;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">
+                                {{loop.index}}. </h5>
+                            <div class="c_name">
+                                <h5
+                                    style="color: #fff; overflow: hidden;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">
+                                    {{user.f_name}}</h5>
+                            </div>
+                            <div class="c_username">
+                                <h5
+                                    style="color: #fff; overflow: hidden;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">
+                                    {{user.username}}</h5>
+                            </div>
+                            <div class="c_mail">
+                                <h5
+                                    style="color: #fff; overflow: hidden;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">
+                                    {{user.mail}}</h5>
+                            </div>
+                            <h5 style="color: #f3e70b;">{{user.role}}</h5>
+
+                            <div class="c_status">
+                                {% if user.ban_status == True %}
+                                <a href="/ban_unban/{{user.user_id}}/Creator" style="text-decoration: none;"><i
+                                        class="bi bi-flag-fill"
+                                        style="color: rgb(241, 5, 5); font-size: 1.5vw;"></i></a>
+                                {% elif user.ban_status == False %}
+                                <a href="/ban_unban/{{user.user_id}}/Creator" style="text-decoration: none;"><i
+                                        class="bi bi-flag-fill" style="color: green; font-size: 1.5vw;"></i></a>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}

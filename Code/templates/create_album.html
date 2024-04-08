@@ -1,0 +1,83 @@
+{% extends 'index.html' %}
+
+
+{% block styles %}
+<style>
+        .create {
+            font-family: 'Arial', sans-serif;
+            background-color: #21293b;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 75vh;
+            color: beige;
+
+        }
+
+        .form-container {
+            padding: 10vh;
+            border-radius: 3vw;
+            width: 30vw;
+
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 1vh;
+            font-weight: bold;
+            color: beige;
+        }
+
+        .form-container input,
+        .form-container textarea {
+            width: 30vw;
+            padding: 1vw;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+</style>
+{% endblock %}
+
+{% block links %}
+<a href="/home">Home Page</a>
+<a href="/song_upload">Song Upload</a>
+<a href="/create_playlist">Create Playlist</a>
+{% endblock %}
+    {% block content %}
+    <div class="create">
+        <div class="form-container">
+            <h2>Create Album</h2>
+            <form action="/create_album" method="post" enctype="multipart/form-data"    >
+                <label for="album_name">Album Name:</label>
+                <input type="text" id="album_name" name="album_name" required>
+    
+                <label for="image_data">Album Image:</label>
+                <input type="file" id="image_data" name="image_data" accept="image/*" required>
+    
+                <label for="desc">Album Description:</label>
+                <textarea id="desc" name="desc" rows="4" required></textarea>
+                
+                <label for="privateCheckbox">Create as Private Select CheckBox:</label>
+                <input type="checkbox" id="privateCheckbox" name="privateCheckbox">
+    
+
+                <button type="submit">Create Album</button>
+            </form>
+        </div>
+</div>
+    {% endblock %}
+</body>
+
+</html>

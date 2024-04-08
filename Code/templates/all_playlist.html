@@ -1,0 +1,64 @@
+{% extends 'index.html' %}
+{% block title %}Playlists{% endblock %}
+
+{% block styles %}
+<style>
+    .playlist_list {
+        /* border: 1px solid #fff; */
+        margin: 3vw;
+        width: 73vw;
+        height: 65vh;
+        overflow: scroll;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .playlist_list .playlist {
+        /* border: 1px solid #fff; */
+        width: 30vw;
+        margin: 2vw;
+        padding: 2vw;
+        background-color: rgb(63, 56, 47);
+
+    }
+
+    .playlist:hover {
+        color: rgb(27, 74, 141);
+        background-color: rgb(90, 90, 11);
+    }
+</style>
+
+{% endblock %}
+
+{% block links %}
+<a href="/history">History</a>
+<br>
+<a href="/explore">Explore</a>
+<br>
+<a href="/home">Home Page</a>
+{% endblock %}
+
+
+{% block content %}
+
+<h5 style="font-size: 3vw; margin: 3vw;">Your Playlists </h5>
+<div class="playlist_list">
+    {% if playlist_list %}
+    {% for playlist in playlist_list %}
+    <a href="/show_playlist/{{playlist.playlist_id}}" style="text-decoration: none;">
+        <div class="playlist">
+            <h5 style="font-size: 2vw; font-weight: 600; color: antiquewhite;">{{playlist.playlist_name}}</h5>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<a href="/create_playlist" style="text-decoration: none;">
+    <p style="color: antiquewhite; font-size: 2vw;">You Have not Created any PLAYLIST</p>
+    <i class="bi bi-plus-circle-fill" style="font-size: 8vw;
+        color: aliceblue;
+        margin: 3vw;"></i>
+</a>
+{% endif %}
+
+{% endblock %}

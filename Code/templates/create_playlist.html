@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+{% block title %}Create Playlist{% endblock %}
+
+{% block styles %}
+    <style>
+        
+
+        .create_playlist form {
+            margin: 6vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 5vw;
+            border-radius: 2vw;
+            width: 40vw;
+        }
+
+        .create_playlist label {
+            color: #fff;
+        }
+
+        .create_playlist select,
+        input {
+            margin-bottom: 10px;
+        }
+
+        .create_playlist button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .create_playlist button:hover {
+            background-color: #218838;
+        }
+    </style>
+{% endblock %}
+{% block links %}
+<a href="/home">HomePage</a>
+<br>
+<a href="/explore">Explore</a>
+<br>
+<a href="/history">History</a>
+{% endblock %}
+    {% block content %}
+    <div class="create_playlist">
+        <form action="/create_playlist" method="post" enctype="multipart/form-data">
+            <label for="playllist_name">Playlist Name</label>
+            <input type="text" id="playlist_name" name="playlist_name" class="form-control" required placeholder="Enter Playlist name">
+            <h3>Select Songs:</h3>
+
+            {% for song in all_songs %}
+            <div>
+                <input type="checkbox" id="{{ song.song_id }}" name="selected_songs" value="{{ song.song_id }}">
+                <label for="{{ song.song_id }}">{{ song.song_name }}</label>
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-success">Upload Song</button>
+        </form>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

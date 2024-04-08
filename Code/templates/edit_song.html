@@ -1,0 +1,95 @@
+{% extends 'index.html' %}
+{% block title %}
+Edit User
+{% endblock %}
+
+{% block styles %}
+<style>
+    .edit_user {
+        background-image: url(/static/register.jpg);
+        /* Replace with your image URL */
+        background-size: cover;
+        background-position: center;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 80vh;
+    }
+
+    .edit_user form {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+    }
+
+    .edit_user label {
+        color: #fff;
+    }
+
+    .edit_user select,
+    input {
+        margin-bottom: 10px;
+    }
+
+    .edit_user button {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #218838;
+    }
+</style>
+{% endblock %}
+
+{% block links %}
+<a href="/home">Home Page</a>
+<br>
+<a href="/all_playlists"> All Playlists</a>
+<br>
+<a href="/history">History</a>
+<br>
+{% if current_user.role=='Creator' %}
+<a href="/change_role">Be Normal</a>
+<br>
+{% else %}
+<a href="/change_role">Be Creator</a>
+<br>
+{% endif %}
+{% endblock %}
+
+{% block ProfilePic %}
+<a href="/logout" style="text-decoration: none; color: red; font-size: 2vw; margin-left: 2vw;">Logout</a>
+{% endblock %}
+
+{% block content %}
+<div class="edit_user">
+    <form action="/edit_song/{{song.song_id}}" method="post" enctype="multipart/form-data">
+        <h5 style="margin-left: 3vw;">Edit Song Details</h5>
+        <img src="{{url_for('static',filename='/image/'+ song.image)}}" alt="" style="height: 15vh; width: 10vw; border-radius: 50%; margin-left: 2.5vw;">
+<br>
+        <label for="email">Name :</label>
+        <input type="text" id="name" name="name" class="form-control" value="{{song.song_name}}" required>
+        <label for="name">Artist</label>
+        <input type="text" id="artist" name="artist" class="form-control" value="{{song.artist}}" required>
+        <label for="username">Genre</label>
+        <input type="text" id="genre" name="genre" class="form-control" value="{{song.genre}}" readonly>
+        <label for="password">Lyrics</label>
+        <input type="text" id="lyrics" name="lyrics" class="form-control" value="{{song.lyrics}}" required>
+        <label for="profilePic">Change Poster Picture</label>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="image" name="image" accept="image/*">
+        </div>
+                <button type="submit" class="btn btn-success">Make Changes</button>
+    </form>
+</div>
+{% endblock %}

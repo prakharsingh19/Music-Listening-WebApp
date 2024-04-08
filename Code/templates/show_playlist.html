@@ -1,0 +1,73 @@
+{% extends 'index.html' %}
+{% block title %} Playlist Details {% endblock %}
+{% block styles %}
+<style>
+    .label button {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 1vh 1vw;
+        border: none;
+        border-radius: 2vh;
+        /* cursor: pointer; */
+        font-size: 1.5vh;
+    }
+
+    .label button:hover {
+        background-color: rgb(89, 57, 9);
+    }
+    .label .label_detail a{
+        height: 1vh;
+        width: 2ve;
+    }
+</style>
+{% endblock %}
+{% block links %}
+<a href="">History</a>
+<br>
+<a href="">Explore</a>
+<br>
+<a href="/home">Home Page</a>
+{% endblock %}
+
+{% block ProfilePic %}
+<img src="{{url_for('static',filename='/image/'+ current_user.image)}}" alt="">
+{% endblock %}
+
+
+{% block content %}
+
+<h5 style="font-size: 5vh; font-weight: 500; color:beige ; margin-top: 5vh; margin-left: 3vh;">
+    {{current_playlist.playlist_name}} </h5>
+    <a
+    href="/delete_playlist/{{current_playlist.playlist_id}}"><button style="background-color: #cc440e;
+    color: #fff;
+    padding: 1vh 1vw;
+    border: none;
+    border-radius: 2vh;
+    margin-left: 50vw;
+    font-size: 1.5vh;">Delete Playlist</button></a>
+<div class="row">
+    <div class="add" style="margin-left: 2vh;">
+        <a href="/add_song/{{current_playlist.playlist_id}}"><button
+                style="border: none; border-radius: 1vh; background-color: rgb(159, 96, 14); color: #fff;">Add more
+                song</button></a>
+    </div>
+    {% for song in playlist_song %}
+    {% set audio = song.song %}
+    {% set poster = song.image %}
+    <div class="label" style="margin-left: 3vh;"
+        onclick="playSong('/static/audio/' + '{{ song.song }}', '/static/image/' + '{{ song.image }}','{{song.song_id}}')">
+        <div class="image">
+            <img src="{{url_for('static',filename='/image/'+ song.image)}}" alt="">
+        </div>
+        <div class="label_detail">
+            <h4 style="margin-top: 1.3vh;">{{song.song_name}}</h4>
+            <!-- <h6>{{song.artist}}</h6> -->
+            <a
+                href="/delete_song_playlist/{{current_playlist.playlist_id}}/{{song.song_id}}"><button>Delete</button></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

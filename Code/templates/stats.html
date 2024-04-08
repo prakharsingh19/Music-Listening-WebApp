@@ -1,0 +1,131 @@
+{% extends 'index.html' %}
+{% block title %}Statistics{% endblock %}
+{% block styles %}
+<style>
+    .main_content{
+        overflow: scroll;
+        /* border: 1px solid #fff;  */
+        /* width: 80vh; */
+        height: 80vh;
+    }
+    .main_content .song_group {
+        margin-top: 2vh;
+        /* border: 1px solid #fff; */
+        height: 40vh;
+        width: 78vw;
+        overflow: scroll;
+        display: flex;
+        flex-wrap: wrap;
+        background-color: rgb(39, 40, 41);
+
+
+    }
+
+    .album {
+        margin: 2vw;
+        width: 17vw;
+        height: 23vh;
+        /* border: 1px solid #fff; */
+
+    }
+
+    .album img {
+        width: 17vw;
+        height: 19vh;
+    }
+
+    .album a {
+        text-decoration: none;
+        color: #492828;
+    }
+
+    .album h4 {
+        color: rgb(208, 125, 15);
+        font-size: 1.3vw;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 1vw;
+        margin-top: .3vh;
+    }
+    
+    .album:hover {
+        background: #492828;
+    }
+
+    .main_content .song_group .label {
+        /* border: 1px solid #fff; */
+        width: 35vw;
+    }
+    .main_content .album_group{
+        margin-top: 2vh;
+        /* border: 1px solid #fff; */
+        height: 40vh;
+        width: 78vw;
+        overflow: scroll;
+        display: flex;
+        flex-wrap: wrap;
+        background-color: rgb(39, 40, 41);
+
+    }
+</style>
+{% endblock %}
+{% block links %}
+{% if current_user.user_id < 0 %}
+<a href="/dashboard">Dashboard</a>
+<br>
+<a href="/logout">Logout</a>
+<br>
+<a href="/all_songs">All Songs</a>
+<br>
+<a href="/all_creators">All Creator</a>
+{% else %}
+<a href="/home">HomePage</a>
+<br>
+<a href="/upload_song">Upload Song</a>
+<br>
+<a href="/">Create Album</a>
+{% endif %}
+{% endblock %}
+{% block content %}
+{% if user_songs %}
+<h5 style="color: #ebdc0a; font-size: 2vw; margin-left: 0.5vw; margin-top: .5vh;">Total Songs Uploded by you:
+    {{user_songs|length}}</h5>
+<div class="song_group">
+    {% for song in user_songs %}
+    {% set audio = song.song %}
+    {% set poster = song.image %}
+    <div class="label"
+        onclick="playSong('/static/audio/' + '{{ song.song }}', '/static/image/' + '{{ song.image }}','{{song.song_id}}')">
+        <div class="image">
+            <img src="{{url_for('static',filename='/image/'+ song.image)}}" alt="">
+        </div>
+        <div class="label_detail">
+            <h4 style="margin-top: 0.5vh;">{{song.song_name}}</h4>
+            <h6>{{song.artist}}</h6>
+            <h6>Play Count {{song.play_count}}</h6>
+        </div>
+        <a href="/edit_song/{{song.song_id}}"><i class="bi bi-pencil-fill"
+                style="color: rgb(253, 192, 22); font-size: 1vw; margin: 2vh;"></i></a>
+        <a href="/delete_song/{{song.song_id}}"><i class="bi bi-trash3-fill"
+                style="color: rgb(224, 13, 13); font-size: 1vw; margin: 2vh;"></i></a>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% if user_albums %}
+<h5 style="color: #ebdc0a; font-size: 2vw; margin-left: 0.5vw; margin-top: .5vh;""> Total Albums by You {{user_albums|length}}
+</h5>
+<div class="album_group">
+    {% for album in user_albums %}
+    <div class="album">
+        <a href="/show_album/{{album.album_id}}">
+            <img src="{{url_for('static',filename='/image/'+ album.image)}}" alt="" >
+            <h4>{{album.album_name}}</h4>
+    </div>
+    </a>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

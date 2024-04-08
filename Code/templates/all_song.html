@@ -1,0 +1,190 @@
+{% extends 'index.html' %}
+{% block title %}User Details{% endblock %}
+{% block styles %}
+<style>
+    main .song_play {
+        width: 0%;
+        height: 0%;
+    }
+
+    main .left_pane,
+    .right_pane {
+        /* border: 1px solid #fff; */
+        width: 10%;
+        height: 100%;
+        background: rgb(0, 0, 0);
+    }
+
+    .right_pane {
+        width: 89.4%;
+        height: 100%;
+        background: #0f1213;
+    }
+
+    .insights .block {
+        /* border: 1px solid #fff; */
+        border-radius: 15%;
+        height: 15vh;
+        width: 10vw;
+    }
+
+    .block:hover {
+        background-color: gray;
+    }
+
+    .list {
+        /* border: 1px solid #fff; */
+        height: 85vh;
+        width: 88vw;
+        display: flex;
+        flex-wrap: wrap;
+        overflow: scroll;
+        padding: 2vw;
+        overflow-y: auto;
+    }
+
+    .list .ribbon {
+        /* border: 1px solid #fff; */
+        border-radius: 20vh;
+        height: 7vh;
+        width: 83vw;
+        margin-bottom: 1vw;
+        margin-left: 0vw;
+        margin-top: .5vh;
+        display: flex;
+        flex-wrap: wrap;
+        padding-top: 1vh;
+    }
+
+    .ribbon:hover {
+        background-color: #117ea2;
+    }
+
+    .ribbon .ribbon_details {
+        /* border: 1px solid #fff; */
+        margin-left: 1.5vw;
+        height: 5vh;
+        width: 67vw;
+        margin-top: .9vw;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .list .ribbon_group {
+        /* border: 1px solid #fff; */
+        width: 85vw;
+        height: 70vh;
+        overflow: scroll;
+    }
+
+    .list .details {
+        /* border: 1px solid #fff; */
+        width: 90vw;
+        height: 3vh;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .bi:hover {
+        color: #fff;
+        background-color: aliceblue;
+    }
+
+    .name {
+        /* border: 1px solid #fff; */
+        width: 17vw;
+        height: 5vh;
+        margin-left: 1vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .artist {
+        /* border: 1px solid #fff; */
+        width: 17vw;
+        height: 5vh;
+        margin-left: 1vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .genre {
+        /* border: 1px solid #fff; */
+        width: 10vw;
+        height: 5vh;
+        margin-left: 2vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .rating {
+        /* border: 1px solid #fff; */
+        width: 5vw;
+        height: 5vh;
+        margin-left: 8vw;
+    }
+
+    .play_time {
+        /* border: 1px solid #fff; */
+        width: 5vw;
+        height: 5vh;
+        margin-left: 2vw;
+    }
+
+    .ban_status {
+        /* border: 1px solid #fff; */
+        width: 5vw;
+        height: 5vh;
+        margin-left: 4vw;
+    }
+</style>
+{% endblock %}
+{% block links %}
+<a href="/dashboard"> Dashboard</a>
+{% endblock %}
+{% block content %}
+<div class="list">
+    <h5 style="color: #fff; font-weight: 600;">All Songs</h5>
+    <div class="details">
+        <h5 style="color: #eb14a7; margin-left: 2vw;">Song</h5>
+        <h5 style="color: #eb14a7; margin-left: 15vw;">Artist</h5>
+        <h5 style="color: #eb14a7; margin-left: 15vw;">Genre</h5>
+        <h5 style="color: #eb14a7; margin-left: 15vw;">Rating</h5>
+        <h5 style="color: #eb14a7; margin-left: 3vw;">Play Time</h5>
+        <h5 style="color: #eb14a7; margin-left: 3vw;">Ban Status</h5>
+    </div>
+    <div class="ribbon_group">
+        {% for song in all_songs %}
+        <div class="ribbon">
+            <h5 style="color: beige;">{{loop.index}}.</h5>
+            <div class="name">
+                <h5 style="color: beige;">{{song.song_name}}</h5>
+            </div>
+            <div class="artist">
+                <h5 style="color: beige;">{{song.artist}}</h5>
+            </div>
+            <div class="genre">
+                <h5 style="color: beige;">{{song.genre}}</h5>
+            </div>
+            <div class="rating">
+                <h5 style="color: beige;">{{song.rating}}</h5>
+            </div>
+            <div class="play_time">
+                <h5 style="color: beige;">{{song.play_count}}</h5>
+            </div>
+            <div class="ban_status">
+                {% if song.ban_status==False %}
+                <a href="/ban_unban/{{song.song_id}}/Song" style="text-decoration: none;"><i class="bi bi-flag-fill" style="color: green; font-size: 1.5vw;"></i></a>
+                {% elif song.ban_status==True %}
+                <a href="/ban_unban/{{song.song_id}}/Song" style="text-decoration: none;"><i class="bi bi-flag-fill" style="color: rgb(250, 8, 8); font-size: 1.5vw;"></i></a>
+                {% endif %}
+            </div> 
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

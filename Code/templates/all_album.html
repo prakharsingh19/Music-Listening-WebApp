@@ -1,0 +1,84 @@
+{% extends 'index.html' %}
+{% block title %}Album Details{% endblock %}
+
+{% block styles %}
+<style>
+    .album_list {
+        /* border: 1px solid #fff; */
+        margin: 3vw;
+        width: 73vw;
+        height: 65vh;
+        overflow: scroll;
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+
+    .album {
+        margin: 2vw;
+        width: 17vw;
+        height: 23vh;
+        /* border: 1px solid #fff; */
+
+    }
+
+    .album img {
+        width: 17vw;
+        height: 19vh;
+    }
+
+    .album a {
+        text-decoration: none;
+        color: #492828;
+    }
+
+    .album h4 {
+        color: rgb(208, 125, 15);
+        font-size: 1.3vw;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-left: 1vw;
+        margin-top: .3vh;
+
+    }
+    .album:hover {
+        background: #492828;
+    }
+</style>
+
+{% endblock %}
+
+{% block links %}
+<a href="/home">Home Page</a>
+<br>
+<a href="/all_playlists">All Playlists</a>
+<br>
+<a href="/history">Histroy</a>
+{% endblock %}
+
+{% block content %}
+<h5 style="font-size: 3vw; margin: 3vw;">Your Albums </h5>
+<div class="album_list">
+    {% if album_list %}
+        {% for album in album_list %}
+        <div class="album">
+            <a href="/show_album/{{album.album_id}}">
+
+                <img src="{{url_for('static',filename='/image/'+ album.image)}}" alt="">
+                <h4>{{album.album_name}}</h4>
+        </div>
+        </a>
+        {% endfor %}
+    {% else %}
+            <a href="/create_album" style="text-decoration: none;">
+                <p style="color: antiquewhite; font-size: 2vw;">You Have not Created any ALBUM</p>
+                <i class="bi bi-plus-circle-fill" style="font-size: 8vw;
+                color: aliceblue;
+                margin: 3vw;"></i>
+            </a>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'index2.html' %}
+{% block title %}
+Song_Web | Home
+{% endblock %}
+{% block name %}
+{{current_user.f_name}}
+{% endblock %}
+{% block ProfilePic %}
+<a href="/edit_user">
+    <img src="{{url_for('static',filename='/image/'+ current_user.image)}}" alt="">
+</a>
+{% endblock %}
+
+{% block links %}
+<a href="/all_playlists">All Playlists</a>
+<br>
+<a href="/history">History</a>
+<br>
+<a href="">Explore</a>
+<br>
+<a href="/create_playlist">Create Playlist</a>
+{% if current_user.role == 'Creator' %}
+<a href="/song_upload">Upload Song</a>
+<a href="/create_album">Create Album</a>
+<a href="/all_albums">All Albums</a>
+<a href="/stats/{{current_user.user_id}}">Stats</a>
+{% endif %}
+{% endblock %}
+{% block fresh_arrivals %}
+{% for song in fresh_arrivals %}
+{% set audio = song.song %}
+{% set poster = song.image %}
+<div class="label"
+    onclick="playSong('/static/audio/' + '{{ song.song }}', '/static/image/' + '{{ song.image }}','{{song.song_id}}')">
+    <div class="image">
+        <img src="{{url_for('static',filename='/image/'+ song.image)}}" alt="">
+    </div>
+    <div class="label_detail">
+        <h4>{{song.song_name}}</h4>
+        <h6>{{song.artist}}</h6>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+{% block trending %}
+{% for song in trending_songs %}
+{% set audio = song.song %}
+{% set poster = song.image %}
+<div class="label"
+    onclick="playSong('/static/audio/' + '{{ song.song }}', '/static/image/' + '{{ song.image }}','{{song.song_id}}')">
+    <div class="image">
+        <img src="{{url_for('static',filename='/image/'+ song.image)}}" alt="">
+    </div>
+    <div class="label_detail">
+        <h4 style="margin-top: 2.5vh;">{{song.song_name}}</h4>
+        <!-- <h6>{{song.artist}}</h6> -->
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block most_played_by_user %}
+{% if user_mostplayed_song %}
+{% for song in user_mostplayed_song %}
+{% set audio = song.song %}
+{% set poster = song.image %}
+<div class="label"
+    onclick="playSong('/static/audio/' + '{{ song.song }}', '/static/image/' + '{{ song.image }}','{{song.song_id}}')">
+    <div class="image">
+        <img src="{{url_for('static',filename='/image/'+ song.image)}}" alt="">
+    </div>
+    <div class="label_detail">
+        <h4 style="margin-top: 2.5vh;">{{song.song_name}}</h4>
+        <!-- <h6>{{song.artist}}</h6> -->
+    </div>
+</div>
+{% endfor %}
+{% else %}
+<h5>
+    May be Any song not played by you now
+</h5>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/music.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/static/music.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #241f02;
+            /* Yellow background color */
+            display: grid;
+            /* place-items: center; */
+
+
+        }
+
+        main {
+            padding: 0px;
+            display: flex;
+            flex-wrap: wrap;
+            height: 100vh;
+            width: 100vw;
+            overflow: scroll;
+        }
+
+        main .left_pane,
+        .right_pane {
+            /* border: 1px solid #fff; */
+            width: 20%;
+            height: 90%;
+            /* background: rgb(0, 0, 0);
+             */
+             background: #2C2C2C;
+
+        }
+
+        /* main .right_pan{
+            border: 1px solid #fff;
+            width: 80vw;
+            height: 90vh;
+            background: #03224d;
+        } */
+
+        main .left_pane h4 {
+            padding-top: 4vh;
+            padding-left: 4vw;
+            /* place-items: center; */
+            font-size: 3vw;
+            /* text-overflow: ellipsis;
+            white-space: nowrap; */
+            color: rgb(174, 237, 237);
+
+        }
+
+        main .left_pane h4 {
+            padding-left: 4vw;
+            font-size: 3vw;
+            color: rgb(69, 72, 72);
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        main .left_pane .links {
+            margin-top: 4vh;
+            margin-left: 3vw;
+            padding-top: 5vh;
+            padding-left: 2.5vw;
+            color: rgb(236, 239, 243);
+            width: 13vw;
+            height: 15vh;
+            /* border: 1px solid #fff; */
+        }
+
+        main .left_pane .links a {
+            font-size: 1.6vw;
+            color: rgb(67, 68, 69);
+            text-decoration: none;
+            text-align: center;
+        }
+
+        main .left_pane .links a:hover {
+            /* color: rgb(5, 41, 41); */
+            color: rgb(22, 140, 140);
+
+        }
+
+        .right_pane {
+            width: 79.4%;
+            background: #1E1E1E;
+
+        }
+
+        main .right_pane .top_bar {
+            width: 100%;
+            height: 10%;
+            background: #000000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-bar {
+            /* border: 1px solid #ccc; */
+            border-radius: 40px;
+            /* Adjust the border-radius for the round shape */
+            padding: 8px;
+            margin-right: 10vw;
+            width: 15vw;
+             background: #1a1f1f;
+
+        }
+
+        .search-bar button {
+            font-size: 20vw;
+            border: none;
+            color: #10011f07;
+            background: #031621;
+            margin-right: 10vw;
+        }
+
+
+        main .song_play {
+            width: 100%;
+            height: 10%;
+            background: #000000;
+            box-shadow: 0px 3px 10px #090f1f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        .profile img {
+            width: 7%;
+            height: 7%;
+            margin-left: 5vw;
+            border-radius: 50%;
+
+        }
+
+        .label {
+            margin: 1vh;
+            height: 10vh;
+            width: 25vw;
+            /* border: 1px solid #fff; */
+            padding: 0px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .label .image {
+            /* border: 1px solid #fff; */
+            width: 10vh;
+            height: 10vh;
+        }
+
+        .label .image img {
+            width: 10vh;
+            height: 10vh;
+        }
+
+        .label .label_detail {
+            /* border: 1px solid #fff; */
+            margin: 1vh;
+            width: 15vw;
+        }
+
+        .label .label_detail h4 {
+            font-size: 1.3vw;
+            color: aliceblue;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .label .label_detail h6 {
+            font-size: 1vw;
+            color: antiquewhite;
+        }
+
+        .label:hover {
+            background-color: #312e20;
+
+        }
+        .song_play img {
+            width: 5vh;
+            height: 5vh;
+            margin-left: 4vw;
+        }
+
+        .song_play audio {
+            width: 70vw;
+            height: 3vh;
+            border-radius: 10%;
+            margin-left: 4vw;
+            margin-right: 4vw;
+            background-color: #031621;
+        }
+
+        .song_play .bi {
+            font-size: 1vw;
+            color: #fff;
+            background: #0f1116;
+            border: none;
+        }
+    </style>
+    {% block styles %}
+    {% endblock %}
+
+</head>
+
+<body>
+
+
+    <main>
+        <div class="left_pane">
+            <h4 style="margin-top: 1vh;">
+                Welcome {% block name %}{% endblock %}
+            </h4>
+            <div class="links">
+                {% block links %}
+                <a href="">All Playlists</a>
+                <br>
+                <a href="">History</a>
+                <br>
+                <a href="">Explore</a>
+                <br>
+                <a href="">Song Upload</a>
+                <br>
+                <a href="">Create Album</a>
+                <br>
+                <a href="">Create Playlist</a>
+                {% endblock %}
+            </div>
+        </div>
+        <div class="right_pane">
+            <div class="top_bar">
+                <div class="profile">
+                    <a href="#">
+                        {% block ProfilePic %}
+                        <!-- <img src="3poster.png" alt=""> -->
+                        {% endblock %}
+                    </a>
+                </div>
+                <div style="flex-grow: 1; display: flex; justify-content: center; align-items: center;">
+                    <form action="/search" , method="post">
+                        <input type="text" id="value" name="value" class="search-bar" placeholder="Search...">
+                        <!-- <button> Go </button> -->
+                    </form>
+                </div>
+            </div>
+            <div class="main_content">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+
+        <div class="song_play">
+            <div class="song_play">
+                <img id="posterImage" onclick="getSongDetails(posterImage)" src="{{ posterImage }}" alt="Song Poster">
+                <audio id="audio" controls>
+                    Your browser does not support the audio element.
+                </audio>
+                <button onclick="playAudio()"><i class="bi bi-play"></i></button>
+                <button onclick="pauseAudio()"><i class="bi bi-pause-fill"></i></button>
+                <button onclick="changeVolume('-')"><i class="bi bi-volume-down"></i></button>
+                <button onclick="changeVolume('+')"><i class="bi bi-volume-up"></i></button>
+            </div>
+        </div>
+    </main>
+    <script>
+       var globalVariable = 'Initial Value';
+        var song_id=0;
+
+        const audio = document.querySelector('audio');
+
+        function playAudio() {
+            audio.play();
+        }
+
+        function pauseAudio() {
+            audio.pause();
+        }
+
+        function changeVolume(direction) {
+            const currentVolume = audio.volume;
+            const step = 0.1;
+
+            if (direction === '+' && currentVolume + step <= 1) {
+                audio.volume += step;
+            } else if (direction === '-' && currentVolume - step >= 0) {
+                audio.volume -= step;
+            }
+        }
+
+        function add_count(song_id){
+            fetch('/currently_playing', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ song_id: song_id }),
+            })
+        }
+        // const audio = document.getElementById('audio');
+
+        function playSong(songSrc, posterSrc,id) {
+            audio.src = songSrc
+            song_id=id;
+            add_count(song_id)
+            audio.play();
+            globalVariable = songSrc;
+            console.log('Global Variable Updated:', globalVariable);
+            console.log('Global Variable Updated:', song_id)
+            var posterImage = document.getElementById('posterImage');
+            if (posterImage) {
+                posterImage.src = posterSrc;
+            }
+
+            // Update the display in the bottom panel
+            const bottomPan = document.querySelector('.bottom_pan');
+            const currentSongTile = document.querySelector('.song-tile:hover');
+
+            // Optional: Highlight the selected song tile
+            if (currentSongTile) {
+                currentSongTile.style.backgroundColor = '#aaf0e3';
+            }
+
+            // Update the bottom panel content (replace with actual song details)
+            bottomPan.innerHTML = `Now Playing: ${currentSongTile.innerText}`;
+        }
+
+        function getSongDetails() {
+            console.log('Accessing Global Variable:', globalVariable);
+            // Make an AJAX request to the server
+            fetch('/get_song_details', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ songName: globalVariable }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Update the pop-up content with fetched song details
+                    document.getElementById('songName').textContent = data.songName;
+                    document.getElementById('artistName').textContent = 'Artist: ' + data.artistName;
+                    // document.getElementById('albumName').textContent = 'Album: ' + data.albumName;
+                    document.getElementById('genre').textContent = 'Genre: ' + data.genre;
+                    // document.getElementById('rating').textContent = 'Rating ' + data.rating;
+
+                    // Show the overlay and pop-up
+                    document.getElementById('overlay').style.display = 'block';
+                    document.getElementById('popup').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error fetching song details:', error);
+                });
+        }
+
+        // Function to hide the pop-up
+        function hidePopup() {
+            // Hide the overlay and pop-up
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('popup').style.display = 'none';
+        }
+
+    </script>
+
+</body>
+
+</html>
